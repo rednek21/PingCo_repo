@@ -32,10 +32,10 @@
   5. ﻿﻿﻿Создайте базу (тут можно копипастуть):
 
   ```
- CREATE DATABASE MashaPinguin;
- CREATE ROLE MashaNapoleon WITH PASSWORD '11111111?!';
- ALTER ROLE MashaNapoleon WITH LOGIN;
- GRANT ALL PRIVILEGES ON DATABASE MashaPinguin to MashaNapoleon;
+ CREATE DATABASE ping_co_db;
+ CREATE ROLE masha_pinguin WITH PASSWORD 'Napoleon';
+ ALTER ROLE masha_pinguin WITH LOGIN;
+ GRANT ALL PRIVILEGES ON DATABASE ping_co_db to masha_pinguin;
  ALTER USER MashaNapoleon CREATEDB;
   ```
      
@@ -57,7 +57,7 @@
   1.При ошибке " Unable to create the django migrations table ":
   
   ```
-  ALTER DATABASE MashaPinguin OWNER TO MashaNapoleon;
+  ALTER DATABASE ping_co_db OWNER TO masha_pinguin;
   ```
 
   И снова попытайтесь провести миграции
