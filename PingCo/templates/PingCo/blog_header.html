@@ -1,0 +1,82 @@
+{% load static %}
+<!-- Header -->
+    <header id="header_main" class="header">
+        <div class="container big">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header__body">
+                        <div class="header__logo">
+                            <a href="{% url 'PingCo:index' %}">
+                                    <img id="site-logo" src="{% static 'assets/images/logo/logo.webp' %}"
+                                         alt="Peson"
+                                         data-retina="{% static 'assets/images/logo/logo@2x.webp' %}" data-width="160"
+                                         data-height="38">
+                                </a>
+                        </div>
+
+                        <div class="header__right">
+                            <nav id="main-nav" class="main-nav">
+                                <ul id="menu-primary-menu" class="menu">
+                                    <li class="menu-item">
+                                        <a href="{% url 'PingCo:index' %}">Главная</a>
+                                    </li>
+                                    <!--li class="menu-item menu-item-has-children">
+                                        <a href="#">Home</a>
+                                        <ul class="sub-menu">
+                                            <li class="menu-item"><a href="index.html">Home v1</a></li>
+                                            <li class="menu-item"><a href="home-v2.html">Home v2</a></li>
+                                            <li class="menu-item"><a href="home-v3.html">Home v3</a></li>
+                                            <li class="menu-item"><a href="cardcarousel.html">Card Carousel</a></li>
+                                            <li class="menu-item"><a href="zigzagcarousel.html">Zigzag Carousel</a></li>
+                                            <li class="menu-item"><a href="coverflowcarousel.html">Coverflow Carousel</a></li>
+                                            <li class="menu-item"><a href="itemcarousel.html">Item Carousel</a></li>
+                                            <li class="menu-item"><a href="3dcarousel.html">3D Carousel</a></li>
+                                        </ul>
+                                    </li-->
+                                    <li class="menu-item menu-item-has-children menu-current-item">
+                                        <a href="#">Explore</a>
+                                        <ul class="sub-menu">
+<!--                                            <li class="menu-item"><a href="nft.html">NFTs</a></li>-->
+                                            <li class="menu-item current-item"><a href="{% url 'PingCo:blog' %}">Блог</a></li>
+<!--                                            <li class="menu-item"><a href="{% url 'PingCo:blog_details' %}">Blog Details</a></li>-->
+                                            <li class="menu-item"><a href="{% url 'PingCo:blog' %}">Blog Details</a></li>
+
+                                            <li class="menu-item"><a href="{% url 'PingCo:mission' %}">Наша миссия</a></li>
+<!--                                            <li class="menu-item"><a href="help-center.html">Help Center</a></li>-->
+                                            <li class="menu-item"><a href="{% url 'PingCo:parti_assets' %}">Разработка сайтов</a></li>
+<!--                                            <li class="menu-item"><a href="advisor.html">Advisors & Backers</a></li>-->
+<!--                                            <li class="menu-item"><a href="partner.html">Partners & Investors</a></li>-->
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'PingCo:about' %}">О нас</a>
+                                    </li>
+<!--                                    <li class="menu-item">-->
+<!--                                        <a href="{% url 'PingCo:roadmap' %}">RoadMap</a>-->
+<!--                                    </li>-->
+                                    <li class="menu-item">
+                                        <a href="{% url 'PingCo:team' %}">Команда</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="{% url 'PingCo:contact' %}">Контакты</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <div class="mobile-button"><span></span></div>
+                        </div>
+
+                        <div class="header__action">
+                            <a href="#" class="search-btn">
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9.7659" cy="9.76639" r="8.98856" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M16.0176 16.4849L19.5416 19.9997" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                            <a href="{% url 'PingCo:contact' %}" class="action-btn"><span>Join Now</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- end Header -->

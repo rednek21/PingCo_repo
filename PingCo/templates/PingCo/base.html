@@ -1,0 +1,94 @@
+{% load static %}
+{% load compress %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+
+    <!-- Styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+
+    <link rel="stylesheet" href="{% static 'app/dist/aos.css' %}">
+    {% block css %} {% endblock %}
+    <link rel="stylesheet" href="{% static 'app/dist/app.css' %}">
+    <!-- end Styles -->
+
+    <!-- Favicon and Touch Icons  -->
+    {% block favicon %} {% endblock %}
+
+</head>
+<body class="home-main header-fixed">
+
+    <div class="wrapper {% if page_visions %} {{ page_visions }} {% endif %}">
+
+        <!--div class="preloader">
+            <div class="clear-loading loading-effect-2">
+            <span></span>
+            </div>
+        </div-->
+
+        {% block header %}{% endblock %}
+
+        {% block content %}{% endblock %}
+
+        {% block most_asked %}{% endblock %}
+
+    <footer class="footer">
+            <div class="shape right"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% block sub_form %} {% endblock %}
+
+
+                        <div class="footer__bottom">
+                            <a href="{% url 'PingCo:index' %}" class="logo"><img src="{% static 'assets/images/logo/logo.webp' %}" alt=""></a>
+
+                            <div class="center mb--30">
+                                <ul class="list">
+                                    <li><a href="{% url 'PingCo:index' %}">Главная</a></li>
+                                    <li><a href="{% url 'PingCo:about' %}">О нас</a></li>
+                                    <li><a href="{% url 'PingCo:parti_assets' %}">Разработка</a></li>
+                                    <li><a href="{% url 'PingCo:roadmap' %}">Дизайн</a></li>
+                                    <li><a href="{% url 'PingCo:team' %}">Команда</a></li>
+                                    <li><a href="{% url 'PingCo:contact' %}">Контакты</a></li>
+                                </ul>
+                                <p>Copyright © 2023, Pingco. Designed by Сreated</p>
+                            </div>
+                            <ul class="list-social">
+                                <li><a href="https://chat.whatsapp.com/KXXijjdeNH037iOtFC1JFR">
+                                    <img src="{% static 'assets/images/icon/whatsapp.png' %}" alt="">
+                                </a></li>
+                                <li><a href="https://t.me/pingcoit">
+                                    <img src="{% static 'assets/images/icon/telegram.png' %}" alt="">
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <a id="scroll-top"><span class="icon-arrow-top"></span></a>
+
+    </div>
+
+    {% compress js %}
+    {% block script %}{% endblock %}
+    {% endcompress %}
+
+    <script src="https://kit.fontawesome.com/adfa82f705.js" crossorigin="anonymous"></script>
+
+    {% block feedback_form %} {% endblock %}
+
+
+</body>
+</html>

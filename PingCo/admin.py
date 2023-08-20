@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from PingCo.models import Subscriber
+
+
+@admin.register(Subscriber)
+class SubscriberAdmin(admin.ModelAdmin):
+    fields = ['email', 'subscribed']
+    list_display = ['email']

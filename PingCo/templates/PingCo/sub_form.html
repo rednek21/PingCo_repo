@@ -1,0 +1,26 @@
+<div class="footer__main">
+    <div class="block-text center">
+
+        <h3 class="heading">Получить новостную рассылку</h3>
+        <p >Будьте вкурсе наших новостей</p>
+
+    </div>
+    <form action="{% if index_view %}{% url 'PingCo:index' %}
+{% elif about_view %}{% url 'PingCo:about' %}
+{% elif mission_view %}{% url 'PingCo:mission' %}
+{% elif team_view %}{% url 'PingCo:team' %}
+{% elif contact_view %}{% url 'PingCo:contact' %}
+{% elif roadmap_view %}{% url 'PingCo:roadmap' %}
+{% elif asset_view %}{% url 'PingCo:parti_assets' %}
+{% elif blog_detail_view %}{% url 'PingCo:blog_detail' %}
+{% endif %}" class="form ajax-form" method="post" id="sf">
+        {% csrf_token %}
+        <div class="form-group">
+            <label style="display: none;" id="{{sf.email.id_for_label}}">Email</label>
+<!--            <input type="email" class="form-control" placeholder="Ваш email">-->
+            {{ sf.email }}
+        </div>
+<!--        <button class="action-btn" type="submit" form="sf"><span>Отправить</span></button>-->
+        <button class="action-btn" id="sf_btn" form="sf"><span>Отправить</span></button>
+    </form>
+</div>

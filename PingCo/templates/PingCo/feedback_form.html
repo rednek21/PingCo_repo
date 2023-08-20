@@ -1,0 +1,53 @@
+ <!--pop_up-->
+<div id="quote_modal" class="QuoteModal">
+<div class="popup_modal">
+    <div>
+        <a href="#close" title="Close" class="fclose">X</a>
+        <h4 class="modals">Оставьте свое сообщение</h4>
+        <p class="text-mod">Наша команда всегда спешит на помощь</p>
+    </div>
+    <div>
+<form action="{% if index_view %}{% url 'PingCo:index' %}
+{% elif about_view %}{% url 'PingCo:about' %}
+{% elif mission_view %}{% url 'PingCo:mission' %}
+{% elif team_view %}{% url 'PingCo:team' %}
+{% elif contact_view %}{% url 'PingCo:contact' %}
+{% elif roadmap_view %}{% url 'PingCo:roadmap' %}
+{% elif asset_view %}{% url 'PingCo:parti_assets' %}
+{% elif blog_detail_view %}{% url 'PingCo:blog_detail' %}
+{% endif %}" class="form-box ajax-form" style="width:100%" method="post" id="fb">
+    {% csrf_token %}
+    <div class="row">
+                        <div class="col">
+                            <label id="{{ ff.name.id_for_label }}">Имя</label>
+                <!--            <input type="text" class="form-control">-->
+                            {{ ff.name }}
+                        </div>
+                        <div class="col">
+                            <label id="{{ ff.email.id_for_label }}">Еmail</label>
+                <!--            <input type="email" class="form-control">-->
+                            {{ ff.email_ }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label id="{{ ff.phone.id_for_label }}">Телефон</label>
+                <!--            <input type="text" class="form-control">-->
+                            {{ ff.phone }}
+                        </div>
+                    </div>
+                    <div class="row mb-0">
+                        <div class="col">
+<!--                            <button class="action-btn" id="fb_btn" type="button"><span>Отправить</span></button>-->
+                            <button class="action-btn" id="fb_btn" type="submit" form="fb"><span>Отправить</span></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+
+
+
