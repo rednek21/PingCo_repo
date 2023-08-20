@@ -7,6 +7,10 @@
    ```python3 -m venv venv```
    
    ```source ven/bin/activate```
+   
+  2. Установите pip, если его нет:
+
+  ```python -m pip install --upgrade pip```
      
   3. ﻿﻿﻿Установите все зависимости из файла requirements.txt (обязательно при активном виртуальном окружении) :
 
@@ -14,7 +18,7 @@
    pip install -r requirements. txt
    ```
 
-  5. Установите PostgreSQL, если у вас его нет, для линуксоидов (пример для Ubuntu, копипаст) : 
+  4. Установите PostgreSQL, если у вас его нет, для линуксоидов (пример для Ubuntu, копипаст) : 
  
    ```
    sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
@@ -25,11 +29,11 @@
    
    Для виндоводов: разбирайтесь сами :)
    
-﻿﻿﻿  4. Откройте psql:
+﻿﻿﻿  5. Откройте psql:
     
   ```sudo -i -u postgres psql```
      
-  5. ﻿﻿﻿Создайте базу (тут можно копипастуть):
+  6. ﻿﻿﻿Создайте базу (тут можно копипастуть):
 
   ```
  CREATE DATABASE ping_co_db;
@@ -39,7 +43,7 @@
  ALTER USER MashaNapoleon CREATEDB;
   ```
      
-  6. ﻿﻿﻿Сделайте миграции:
+  7. ﻿﻿﻿Сделайте миграции:
 
   ```
   python3 manage.py migrate
@@ -68,7 +72,7 @@
   sudo fuser -k 8000/tcp
   ```
 
-  4. Если возникла ошибка при установке psycopg2:
+  3. Если возникла ошибка при установке psycopg2:
 
    ```sudo apt install libpq-dev python3-dev```
 
