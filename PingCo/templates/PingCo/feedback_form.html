@@ -9,12 +9,13 @@
     <div>
 <form action="{% if index_view %}{% url 'PingCo:index' %}
 {% elif about_view %}{% url 'PingCo:about' %}
-{% elif mission_view %}{% url 'PingCo:mission' %}
+{% elif mission_view %}{% url 'PingCo:mission' %}rm_submit/
 {% elif team_view %}{% url 'PingCo:team' %}
 {% elif contact_view %}{% url 'PingCo:contact' %}
 {% elif roadmap_view %}{% url 'PingCo:roadmap' %}
 {% elif asset_view %}{% url 'PingCo:parti_assets' %}
-{% elif blog_detail_view %}{% url 'PingCo:blog_detail' %}
+{% elif blog_view %} {% url 'blog:index' %}
+{% elif blog_detail_view %}{% url 'blog:blog_details' post.id %}
 {% endif %}" class="form-box ajax-form" style="width:100%" method="post" id="fb">
     {% csrf_token %}
     <div class="row">

@@ -1,357 +1,55 @@
-{% extends 'PingCo/base.html' %}
+{% extends 'blog/base.html' %}
 
 {% load static %}
 
-{% block feedback_form %}
-{% include 'PingCo/feedback_form.html' %}
-{% endblock %}
+{% block blog %}
+<div class="list">
+                        {% for post in posts %}
+                        <div class="blog-box-2">
+                            <div class="image">
+                                <a href="{{ post.get_absolute_url }}">
+<!--                                    <img src="{% static 'assets/images/layouts/blog-01.webp' %}" alt="">-->
+                                    <img src="{{ post.image.url }}" alt="Не удалось загрузить изображение">
+                                </a>
+                            </div>
 
-{% block favicon %}
-<link rel="shortcut icon" href="{% static 'assets/images/logo/favicon.webp' %}">
-<link rel="apple-touch-icon-precomposed" href="{% static 'assets/images/logo/favicon.webp' %}">
-{% endblock %}
-
-{% block header %}
-{% include 'PingCo/main_header.html' %}
-{% endblock %}
-
-{% block script %}
-    <script src="{% static 'app/js/jquery.min.js' %}"></script>
-    <script src="{% static 'app/js/jquery.easing.js' %}"></script>
-    <script src="{% static 'app/js/plugins.js' %}"></script>
-    <script src="{% static 'app/js/countto.js' %}"></script>
-
-    <script src="{% static 'app/js/app.js' %}"></script>
-    <script src="{% static 'app/js/count-down.js' %}"></script>
-
-    <script src="{% static 'app/js/aos.js' %}"></script>
-
-
-    <script src="{% static 'app/js/swiper-bundle.min.js' %}"></script>
-    <script src="{% static 'app/js/swiper.js' %}"></script>
-
-    <!-- Initialize Swiper -->
-{% endblock %}
-
-{% block content %}
-    <!-- Pagetitle -->
-    <section class="page-title">
-        <div class="shape"></div>
-        <div class="shape right s3"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title__body">
-                        <div class="page-title__main">
-                            <h4 class="title">Блог</h4>
-    
-                            <ul class="breacrumb">
-                                <li><a href="{% url 'PingCo:index' %}">Главная</a></li>
-                                <li><p>Блог</p></li>
-                            </ul>
+                            <div class="content">
+                                <div class="meta ">
+                                    <a href="{% url 'blog:index' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+<!--                                    Июнь 13, 2023-->
+                                        {{ post.published_at|date:"F j, Y" }}
+                                    </a>
+                                </div>
+                                <a href="{% url 'blog:post_with_category' post.id %}" class="title">{{ post.title }}</a>
+                                <p class="text">{{ post.preview_text }}</p>
+                            </div>
                         </div>
+                        {% endfor %}
+
+                        {% if posts.paginator.num_pages > 1 %}
+                            <div class="pagination">
+                                <span class="step-links">
+                                    {% if posts.has_previous %}
+                                        <a href="?page=1">&laquo; first</a>
+                                        <a href="?page={{ posts.previous_page_number }}">previous</a>
+                                    {% endif %}
+
+                                    {% for num in posts.paginator.page_range %}
+                                        {% if num == posts.number %}
+                                            <span class=" current-page">{{ num }}</span>
+                                        {% elif num > posts.number|add:'-5' and num < posts.number|add:'5' %}
+                                            <a href="?page={{ num }}">{{ num }}</a>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% if posts.has_next %}
+                                        <a href="?page={{ posts.next_page_number }}">next</a>
+                                        <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            {% endif %}
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Pagetitle -->
-
-    <!-- BLog -->
-    <section class="bloglist">
-        <div class="container">
-            <div class="row">
-                <div class="bloglist__main">
-                    <div class="list">
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-01.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Июнь 13, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Разработка сайта: этапы и особенности.</a>
-                                <p class="text">Разработка сайта – это процесс создания веб-ресурса, который позволяет пользователям получать информацию, товары или услуги через интернет.</p>
-                            </div>
-                        </div>
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-02.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Июнь 17, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Поговорим о UX/UI дизайне.</a>
-                                <p class="text">UX/UI дизайн - это процесс создания удобного и привлекательного интерфейса для пользователей. Он включает в себя разработку дизайна пользовательского интерфейса, а также проектирование пользовательских сценариев и тестирование на соответствие им.</p>
-                            </div>
-                        </div>
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-03.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Февраль 12, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Уникализация контента является важным аспектом успешного веб-сайта или блога. </a>
-                                <p class="text">Одним из основных преимуществ уникализации контента является повышение его привлекательности для пользователей. Уникальный контент обычно привлекает больше внимания и вызывает больше интереса у читателей. </p>
-                            </div>
-                        </div>
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-04.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Январь 04, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Мощным инструментом для анализа и обработки данных</a>
-                                <p class="text">Нейронные сети – это математические модели, которые имитируют работу человеческого мозга. Они состоят из множества узлов (нейронов) и связей между ними. Каждый нейрон получает входные данные от других нейронов и обрабатывает их, используя определенный алгоритм. Затем он передает результат обработки другим нейронам через свои связи.</p>
-                            </div>
-                        </div>
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-05.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Март 08, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">В настоящее время наблюдается множество тенденций в разработке программного обеспечения</a>
-                                <p class="text">В целом, тенденции в разработке программного обеспечения постоянно меняются и развиваются. Разработчики должны быть в курсе этих тенденций и использовать их для создания более эффективных и инновационных приложений.</p>
-                            </div>
-                        </div>
-                        <div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="{% static 'assets/images/layouts/blog-06.webp' %}" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    Май 01, 2023</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Как обеспечить безопасность сайта?</a>
-                                <p class="text">В целом, обеспечение безопасности сайта – это комплексный процесс, требующий постоянного внимания и усилий со стороны владельцев и разработчиков. Только так можно гарантировать безопасность своих пользователей и сохранить репутацию своего сайта.</p>
-                            </div>
-                        </div>
-                        <!--div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="assets/images/layouts/blog-01.webp" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    February 18, 2022</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">Over $100 Million Worth of NFTs Stolen by Hackers Between July 2021-2022: Elliptic</a>
-                                <p class="text">Below is a list of frequently asked questions and answers from partners and 3D artist. Please check this FAQ first before contacting us.</p>
-                            </div>
-                        </div-->
-                        <!--div class="blog-box-2">
-                            <div class="image">
-                                <a href="{% url 'PingCo:blog' %}">
-                                    <img src="assets/images/layouts/blog-02.webp" alt="">
-                                </a>
-                            </div>
-
-                            <div class="content">
-                                <div class="meta ">
-                                    <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                        </svg>
-                                    February 18, 2022</a>
-                                </div>
-                                <a href="{% url 'PingCo:blog' %}" class="title">5 CELEBRITY-BACKED NFT PROJECTS THAT TURNED OUT TO BE SCAMS</a>
-                                <p class="text">Below is a list of frequently asked questions and answers from partners and 3D artist. Please check this FAQ first before contacting us.</p>
-                            </div>
-                        </div-->
-
-                        <!--div class="pagination">
-                            <ul>
-                                <li><a href="">
-                                    <svg width="10" height="15" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1.1212 7.46543L7.56346 13.8092C7.8205 14.0662 8.23613 14.0662 8.49317 13.8092L8.88144 13.4209C9.13848 13.1639 9.13848 12.7482 8.88144 12.4912L3.2869 7.00059L8.87598 1.50997C9.133 1.25293 9.133 0.837303 8.87598 0.580281L8.48769 0.191991C8.23067 -0.0650311 7.81504 -0.0650311 7.558 0.191991L1.11578 6.53574C0.864303 6.79278 0.864302 7.20841 1.1212 7.46543Z" fill="white" fill-opacity="0.5"/>
-                                        </svg>
-                                        
-                                </a></li>
-                                <li><a href="">1</a></li>
-                                <li><a href="">2</a></li>
-                                <li><a href="">3</a></li>
-                                <li><a href="">
-                                    <svg width="10" height="15" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8.8788 7.46543L2.43654 13.8092C2.1795 14.0662 1.76387 14.0662 1.50683 13.8092L1.11856 13.4209C0.861521 13.1639 0.861521 12.7482 1.11856 12.4912L6.7131 7.00059L1.12402 1.50997C0.866998 1.25293 0.866998 0.837303 1.12402 0.580281L1.51231 0.191991C1.76933 -0.0650311 2.18496 -0.0650311 2.442 0.191991L8.88422 6.53574C9.1357 6.79278 9.1357 7.20841 8.8788 7.46543Z" fill="white" fill-opacity="0.5"/>
-                                    </svg>
-                                </a></li>
-                            </ul>
-                        </div-->
-                    </div>
-
-                    <div class="sidebar">
-                        <form action="#" class="widget-search">
-                            <input type="text" placeholder="Искать по категориям..." required="">
-                            <a class="btn-search">
-                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="9.7659" cy="9.76639" r="8.98856" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                    <path d="M16.0176 16.4849L19.5416 19.9997" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
-                        </form>
-
-                        <div class="widget-sidebar category">
-                            <h5 class="heading">Категории
-                            </h5>
-                            <ul>
-                                <li><a href="">Искусственный интеллект <span>(18)</span></a></li>
-                                <li><a href="">Уникализация <span>(57)</span></a></li>
-                                <li><a href="">Тенденции в разработке <span>(5)</span></a></li>
-                                <li><a href="">UX/UI дизайн <span>(9)</span></a></li>
-                                <li><a href="">Как защить сайт? <span>(3)</span></a></li>
-                                <li><a href="">Этапы разработки <span>(81)</span></a></li>
-                                <li><a href="">Нейро сеть <span>(42)</span></a></li>
-                            </ul>
-                        </div>
-                        <div class="widget-sidebar recent">
-                            <h5 class="heading">Похожие статьи
-                            </h5>
-                            <ul>
-                                <li>
-                                    <div class="image"><a href="#"><img src="{% static 'assets/images/layouts/blog-01.webp' %}" alt=""></a></div>
-
-                                    <div class="content">
-                                        <div class="meta ">
-                                            <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                             Июнь 13, 2023</a>
-                                        </div>
-                                        <a href="{% url 'PingCo:blog' %}" class="title">Разработка сайта: этапы и особенности.</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="image"><a href="#"><img src="{% static 'assets/images/layouts/blog-02.webp' %}" alt=""></a></div>
-
-                                    <div class="content">
-                                        <div class="meta ">
-                                            <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            Июнь 17, 2023</a>
-                                        </div>
-                                        <a href="{% url 'PingCo:blog' %}" class="title">Поговорим о UX/UI дизайне.</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="image"><a href="#"><img src="{% static 'assets/images/layouts/blog-03.webp' %}" alt=""></a></div>
-
-                                    <div class="content">
-                                        <div class="meta ">
-                                            <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            Февраль 12, 2023</a>
-                                        </div>
-                                        <a href="{% url 'PingCo:blog' %}" class="title">Уникализация контента </a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="image"><a href="#"><img src="{% static 'assets/images/layouts/blog-04.webp' %}" alt=""></a></div>
-
-                                    <div class="content">
-                                        <div class="meta ">
-                                            <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            Январь 04, 2023</a>
-                                        </div>
-                                        <a href="{% url 'PingCo:blog' %}" class="title">Мощным инструментом</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="image"><a href="#"><img src="{% static 'assets/images/layouts/blog-05.webp' %}" alt=""></a></div>
-
-                                    <div class="content">
-                                        <div class="meta ">
-                                            <a href="{% url 'PingCo:blog' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                                </svg>
-                                            Март 08, 2023</a>
-                                        </div>
-                                        <a href="{% url 'PingCo:blog' %}" class="title">Тенденции в разработке</a>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                        <div class="widget-sidebar widget-join">
-                            <img src="{% static 'assets/images/logo/lolo-sm.webp' %}" alt="">
-
-                            <h5>Оставайтесь в курсе событий</h5>
-
-                            <a href="#" class="action-btn"><span>Перейти</span></a>
-                        </div>
-                        <div class="widget-sidebar tag">
-                            <h5 class="heading">
-                                Популярные Теги
-                            </h5>
-                            <ul>
-                                <li><a href="{% url 'PingCo:blog' %}">Нейро сеть</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">Безопасность</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">Уникализация</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">Тенденции</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">UX/UI</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">Дизайн</a></li>
-                                <li><a href="{% url 'PingCo:blog' %}">Этапы разработки</a></li>
-
-                            </ul>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- end BLog -->
 {% endblock %}

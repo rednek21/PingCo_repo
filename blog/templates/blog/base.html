@@ -1,10 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'PingCo/base.html' %}
 
-</body>
-</html>
+{% load static %}
+
+{% block feedback_form %}
+{% include 'PingCo/feedback_form.html' %}
+{% endblock %}
+
+{% block favicon %}
+<link rel="shortcut icon" href="{% static 'assets/images/logo/favicon.webp' %}">
+<link rel="apple-touch-icon-precomposed" href="{% static 'assets/images/logo/favicon.webp' %}">
+{% endblock %}
+
+{% block header %}
+{% include 'PingCo/main_header.html' %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'app/js/jquery.min.js' %}"></script>
+    <script src="{% static 'app/js/jquery.easing.js' %}"></script>
+    <script src="{% static 'app/js/plugins.js' %}"></script>
+    <script src="{% static 'app/js/countto.js' %}"></script>
+
+    <script src="{% static 'app/js/app.js' %}"></script>
+    <script src="{% static 'app/js/count-down.js' %}"></script>
+
+    <script src="{% static 'app/js/aos.js' %}"></script>
+
+
+    <script src="{% static 'app/js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'app/js/swiper.js' %}"></script>
+
+    <!-- Initialize Swiper -->
+{% endblock %}
+
+{% block content %}
+    <!-- Pagetitle -->
+    <section class="page-title">
+        <div class="shape"></div>
+        <div class="shape right s3"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title__body">
+                        <div class="page-title__main">
+                            <h4 class="title">Блог</h4>
+
+                            <ul class="breacrumb">
+                                <li><a href="{% url 'PingCo:index' %}">Главная</a></li>
+                                <li><p>Блог</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Pagetitle -->
+
+    <!-- BLog -->
+    <section class="bloglist">
+        <div class="container">
+            <div class="row">
+                <div class="bloglist__main">
+
+                        {% block blog %} {% endblock %}
+
+                    <div class="sidebar">
+                        <form action="#" class="widget-search">
+                            <input type="text" placeholder="Искать по категориям..." required="">
+                            <a class="btn-search">
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="9.7659" cy="9.76639" r="8.98856" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    <path d="M16.0176 16.4849L19.5416 19.9997" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </a>
+                        </form>
+
+                        <div class="widget-sidebar category">
+                            <h5 class="heading">Категории
+                            </h5>
+                            <ul>
+                                {% for category in categories %}
+                                <li><a href="{{ category.get_absolute_url }}"> {{category.title}} <span>({{ category.posts.count }})</span></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="widget-sidebar recent">
+                            <h5 class="heading">Похожие статьи
+                            </h5>
+                            <ul>
+
+                                {% for post in similar_posts %}
+                                    <li>
+                                    <div class="image"><a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt=""></a></div>
+
+                                    <div class="content">
+                                        <div class="meta ">
+                                            <a href="{{ post.get_absolute_url }}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                             {{ post.published_at }}</a>
+                                        </div>
+                                        <a href="{{ post.get_absolute_url }}" class="title">{{ post.title }}</a>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="widget-sidebar widget-join">
+                            <img src="{% static 'assets/images/logo/lolo-sm.webp' %}" alt="">
+
+                            <h5>Оставайтесь в курсе событий</h5>
+
+                            <a href="#" class="action-btn"><span>Перейти</span></a>
+                        </div>
+                        <div class="widget-sidebar tag">
+                            <h5 class="heading">
+                                Популярные Теги
+                            </h5>
+                            <ul>
+                                {% for tag in popular_tags %}
+                                <li><a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end BLog -->
+{% endblock %}

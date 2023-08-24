@@ -2,7 +2,7 @@
     <div class="block-text center">
 
         <h3 class="heading">Получить новостную рассылку</h3>
-        <p >Будьте вкурсе наших новостей</p>
+        <p >Будьте в курсе наших новостей</p>
 
     </div>
     <form action="{% if index_view %}{% url 'PingCo:index' %}
@@ -12,7 +12,6 @@
 {% elif contact_view %}{% url 'PingCo:contact' %}
 {% elif roadmap_view %}{% url 'PingCo:roadmap' %}
 {% elif asset_view %}{% url 'PingCo:parti_assets' %}
-{% elif blog_detail_view %}{% url 'PingCo:blog_detail' %}
 {% endif %}" class="form ajax-form" method="post" id="sf">
         {% csrf_token %}
         <div class="form-group">
