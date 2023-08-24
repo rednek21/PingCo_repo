@@ -40,7 +40,7 @@
  CREATE ROLE masha_pinguin WITH PASSWORD 'Napoleon';
  ALTER ROLE masha_pinguin WITH LOGIN;
  GRANT ALL PRIVILEGES ON DATABASE ping_co_db to masha_pinguin;
- ALTER USER MashaNapoleon CREATEDB;
+ ALTER USER masha_pinguin CREATEDB;
   ```
      
   7. ﻿﻿﻿Сделайте миграции:
