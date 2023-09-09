@@ -50,7 +50,7 @@ class Post(models.Model):
     preview_text = models.TextField()
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='posts')
     tag = models.ManyToManyField(to=Tag, related_name='tags')
-    image = models.ImageField(upload_to='post_images', null=True, blank=True)
+    image = models.ImageField(upload_to='post_images')
     image_text = models.CharField(max_length=128, null=True, blank=True)
     main_text = models.TextField()
     published_at = models.DateTimeField(auto_now_add=True)

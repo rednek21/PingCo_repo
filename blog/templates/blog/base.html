@@ -66,9 +66,10 @@
                         {% block blog %} {% endblock %}
 
                     <div class="sidebar">
-                        <form action="#" class="widget-search">
-                            <input type="text" placeholder="Искать по категориям..." required="">
-                            <a class="btn-search">
+                        <form action="{% url 'blog:search' %}" class="widget-search" method="get" id="searchform">
+<!--                            <input type="text" placeholder="Искать по названиям..." required="">-->
+                            {{ searchform.title }}
+                            <a class="btn-search" onclick="document.getElementById('searchform').submit(); return false;">
                                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="9.7659" cy="9.76639" r="8.98856" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
                                     <path d="M16.0176 16.4849L19.5416 19.9997" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>

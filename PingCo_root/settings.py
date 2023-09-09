@@ -49,10 +49,12 @@ INSTALLED_APPS = [
     'PingCo',
     'blog',
 
-    'debug_toolbar',
+    # 'debug_toolbar',
     'crispy_forms',
     'django_redis',
     'compressor',
+    'django_cleanup',
+    'silk'
 ]
 
 MIDDLEWARE = [
@@ -63,7 +65,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'PingCo_root.urls'
@@ -177,18 +180,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Sending emails
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-else:
-    EMAIL_HOST = env('EMAIL_HOST')
-    EMAIL_PORT = env('EMAIL_PORT')
-    EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-    EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+# if DEBUG:
+#     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# else:
+#     EMAIL_HOST = env('EMAIL_HOST')
+#     EMAIL_PORT = env('EMAIL_PORT')
+#     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+#     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+#     EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
-# EMAIL_HOST = env('EMAIL_HOST')
-# EMAIL_PORT = env('EMAIL_PORT')
-# EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-# EMAIL_USE_SSL = env('EMAIL_USE_SSL')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 

@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block blog %}
+<div class="list">
+    {% for post in found %}
+        <div class="blog-box-2">
+            <div class="image">
+                <a href="{{ post.get_absolute_url }}">
+<!--                                    <img src="{% static 'assets/images/layouts/blog-01.webp' %}" alt="">-->
+                    <img src="{{ post.image.url }}" alt="Не удалось загрузить изображение">
+                </a>
+            </div>
+
+            <div class="content">
+                <div class="meta ">
+                    <a href="{% url 'blog:index' %}"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.9375 0.75V2.0625M9.0625 0.75V2.0625M0.75 9.9375V3.375C0.75 3.0269 0.888281 2.69306 1.13442 2.44692C1.38056 2.20078 1.7144 2.0625 2.0625 2.0625H9.9375C10.2856 2.0625 10.6194 2.20078 10.8656 2.44692C11.1117 2.69306 11.25 3.0269 11.25 3.375V9.9375M0.75 9.9375C0.75 10.2856 0.888281 10.6194 1.13442 10.8656C1.38056 11.1117 1.7144 11.25 2.0625 11.25H9.9375C10.2856 11.25 10.6194 11.1117 10.8656 10.8656C11.1117 10.6194 11.25 10.2856 11.25 9.9375M0.75 9.9375V5.5625C0.75 5.2144 0.888281 4.88056 1.13442 4.63442C1.38056 4.38828 1.7144 4.25 2.0625 4.25H9.9375C10.2856 4.25 10.6194 4.38828 10.8656 4.63442C11.1117 4.88056 11.25 5.2144 11.25 5.5625V9.9375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+<!--                                    Июнь 13, 2023-->
+                        {{ post.published_at|date:"F j, Y" }}
+                    </a>
+                </div>
+                <a href="{% url 'blog:post_with_category' post.id %}" class="title">{{ post.title }}</a>
+                <p class="text">{{ post.preview_text }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% if found.paginator.num_pages > 1 %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if found.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ found.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    {% for num in found.paginator.page_range %}
+                        {% if num == found.number %}
+                            <span class=" current-page">{{ num }}</span>
+                        {% elif num > found.number|add:'-5' and num < found.number|add:'5' %}
+                            <a href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if found.has_next %}
+                        <a href="?page={{ found.next_page_number }}">next</a>
+                        <a href="?page={{ found.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+            {% endif %}
+    </div>
+{% endblock %}

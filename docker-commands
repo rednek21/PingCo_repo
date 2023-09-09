@@ -1,0 +1,34 @@
+# to build image to container
+sudo docker-compose build
+
+# to run the container
+sudo docker-compose up
+
+# to stop the container
+sudo docker-compose down
+
+# when first start app (after docker-compose up)
+sudo docker-compose exec web python3 manage.py migrate --noinput
+
+where "web" is the service in docker-compose.yml
+
+P.S. After exec "service-name" command can write any command from manage.py
+    example: sudo docker-compose exec web python3 manage.py createsuperuser
+
+# to get into container
+sudo docker exec -it "container_name" bash
+
+# to watch all containers
+sudo docker ps
+
+# to watch all images
+sudo docker images -a
+
+# to watch active images
+sudo docker images
+
+# to run specific docker-compose file
+sudo docker-compose -f "specific docker-compose file" up -d --build
+
+example:
+sudo docker-compose -f docker-compose.prod.yml up -d --build
