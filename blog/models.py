@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.db import models
 from django.urls import reverse
 from pytils.translit import slugify
@@ -46,13 +47,14 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=256, unique=True)
-    preview_text = models.TextField()
+    title = RichTextUploadingField(max_length=128, unique=True)
+    preview_text = RichTextUploadingField(max_length=256)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name='posts')
     tag = models.ManyToManyField(to=Tag, related_name='tags')
     image = models.ImageField(upload_to='post_images')
     image_text = models.CharField(max_length=128, null=True, blank=True)
-    main_text = models.TextField()
+    # main_text = models.TextField()
+    main_text = RichTextUploadingField()
     published_at = models.DateTimeField(auto_now_add=True)
     slug = models.CharField(unique=True, blank=True)
 
